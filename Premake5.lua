@@ -3,7 +3,7 @@ workspace "Computer Graphics"
    language "C++"
    architecture "x64"
    systemversion "latest"
-   toolset "v142"
+   toolset "v141"
    optimize "Speed"
    filter "configurations:Debug"
       defines { "DEBUG" }
@@ -41,7 +41,7 @@ group "01. Black image"
       files { "lib/stb/stb_image.h", "tests/utils.h", "tests/black_image_tests.cpp" }
       links "Black image lib"
       debugargs { "--benchmark-samples", "25" }
---[[
+
 group "02. Color space"
    project "Color space lib"
       kind "StaticLib"
@@ -67,6 +67,7 @@ group "02. Color space"
       links "Color space lib"
       debugargs { "--benchmark-samples", "25" }
 
+
 group "03. Draw line"
    project "Draw line lib"
       kind "StaticLib"
@@ -91,7 +92,7 @@ group "03. Draw line"
       files { "lib/stb/stb_image.h", "tests/utils.h", "tests/draw_line_tests.cpp" }
       links "Draw line lib"
       debugargs { "--benchmark-samples", "25" }
-
+      
 group "04. Read obj"
    project "Read obj lib"
       kind "StaticLib"
@@ -116,7 +117,7 @@ group "04. Read obj"
       files { "lib/stb/stb_image.h", "tests/utils.h", "tests/read_obj_tests.cpp" }
       links "Read obj lib"
       debugargs { "--benchmark-samples", "25" }
-
+--[[
 group "05. Projection"
    project "Projection lib"
       kind "StaticLib"
