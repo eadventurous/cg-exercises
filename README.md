@@ -1,6 +1,7 @@
 # cg-template
-Template project for computer graphics exercises
+Completed exercises for Computer Graphics in Game Development course forked from the initial template repository.
 
+By Egor Ivkov
 
 Don't forget 
 ```sh
