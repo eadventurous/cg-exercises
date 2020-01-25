@@ -167,7 +167,7 @@ group "06. Triangle rasterization"
       files { "lib/stb/stb_image.h", "tests/utils.h", "tests/triangle_rasterization_tests.cpp" }
       links "Triangle rasterization lib"
       debugargs { "--benchmark-samples", "25" }
---[[
+
 group "07. Z-buffer culling"
    project "Z buffer culling lib"
       kind "StaticLib"
@@ -192,7 +192,7 @@ group "07. Z-buffer culling"
       files { "lib/stb/stb_image.h", "tests/utils.h", "tests/z_buffer_culling_tests.cpp" }
       links "Z buffer culling lib"
       debugargs { "--benchmark-samples", "25" }
-
+--[[
 group "08. Phong model"
    project "Phong model lib"
       kind "StaticLib"
