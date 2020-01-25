@@ -87,32 +87,41 @@ void TriangleRasterization::DrawScene()
 
 void TriangleRasterization::DrawTriangle(float4 triangle[3])
 {
-	color color(255, 255, 255);
+	color c(255, 255, 255);
 	float2 bb_begin = max(float2(0,0), min(min(triangle[0].xy(), triangle[1].xy()), triangle[2].xy()));
 	float2 bb_end = min(float2(static_cast<float>(width-1), static_cast<float>(height-1)), max(max(triangle[0].xy(), triangle[1].xy()), triangle[2].xy()));
-
+	for (int x = bb_begin.x; x < bb_end.x; x++) {
+		for (int y = bb_begin.y; y < bb_end.y; y++) {
+			float2 point(x, y);
+			if(EdgeFunction(point, triangle[0].xy(), triangle[1].xy()) < 0
+				&& EdgeFunction(point, triangle[1].xy(), triangle[2].xy()) <0
+				&& EdgeFunction(point, triangle[2].xy(), triangle[0].xy()) < 0)
+			SetPixel(x, y, color(255, 0, 0));
+		}
+	}
 	DrawLine(static_cast<unsigned short>(triangle[0].x),
 		static_cast<unsigned short>(triangle[0].y),
 		static_cast<unsigned short>(triangle[1].x),
 		static_cast<unsigned short>(triangle[1].y),
-		color);
+		c);
 
 	DrawLine(static_cast<unsigned short>(triangle[1].x),
 		static_cast<unsigned short>(triangle[1].y),
 		static_cast<unsigned short>(triangle[2].x),
 		static_cast<unsigned short>(triangle[2].y),
-		color);
+		c);
 
 	DrawLine(static_cast<unsigned short>(triangle[2].x),
 		static_cast<unsigned short>(triangle[2].y),
 		static_cast<unsigned short>( triangle[0].x),
 		static_cast<unsigned short>(triangle[0].y),
-		color);
+		c);
 }
 
 float TriangleRasterization::EdgeFunction(float2 a, float2 b, float2 c)
 {
-	return 0.0;
+	float2 delta = b - c;
+	return (c.x - a.x) * delta.y - (c.y - a.y) * delta.x;
 }
 
 
