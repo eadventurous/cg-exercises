@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[])
 {
-    ZCulling* render = new ZCulling(1920, 1080, "models/cube.obj");
+    ZCulling* render = new ZCulling(1920, 1080, "models/triangles.obj");
     render->Clear();
     render->DrawScene();
     int result = render->Save("results/z_buffer_cuilling.png");
