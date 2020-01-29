@@ -23,7 +23,7 @@ void ZCulling::DrawScene()
 {
 	parser->Parse();
 
-	float alpha = M_PI * 30 / 180;
+	float alpha = M_PI * 0 / 180;
 	float3 eye{ 0,0,0 };
 	float3 look_at{ 0,0,2 };
 	float3 up{ 0,1,0 };
@@ -32,9 +32,9 @@ void ZCulling::DrawScene()
 	float4x4 rotation
 	{
 		{1, 0, 0, 0},
-		{0, cos(alpha), -sin(alpha), 0},
-		{0, sin(alpha), cos(alpha), 0},
-		{0, 0, 2, 1}
+		{0, cos(alpha), sin(alpha), 0},
+		{0, -sin(alpha), cos(alpha), 0},
+		{0, 0, 0, 1}
 	};
 
 	float4x4 translte
@@ -49,7 +49,7 @@ void ZCulling::DrawScene()
 
 	float3 zaxis = normalize(eye - look_at);
 	float3 xaxis = normalize(cross(up, zaxis));
-	float3 yaxis = normalize(cross(zaxis, xaxis));
+	float3 yaxis = cross(zaxis, xaxis);
 
 	float4x4 view{
 		{xaxis.x, xaxis.y, xaxis.z, -dot(xaxis, eye)},
@@ -70,8 +70,8 @@ void ZCulling::DrawScene()
 	{
 		{xScale, 0, 0, 0},
 		{0, yScale, 0, 0},
-		{0, 0, zFar / (zNear - zFar), zNear*zFar / (zNear - zFar)},
-		{0, 0, 1, 0}
+		{0, 0, (zFar + zNear) / (zNear - zFar), -zNear*zFar / (zFar - zNear)},
+		{0, 0, -1, 0}
 	};
 
 	float4x4 translateMatrix = mul(projection, view, world);
@@ -82,6 +82,7 @@ void ZCulling::DrawScene()
 		float4 translated[3];
 		for (int i = 0; i < 3; i++)
 		{
+			std::cout << face.vertexes[i] << std::endl << std::endl;
 			translated[i] = mul(translateMatrix, face.vertexes[i]);
 			translated[i] /= translated[i].w;
 			translated[i].x = x_center + x_center * translated[i].x;
@@ -119,6 +120,25 @@ void ZCulling::DrawTriangle(float4 triangle[3])
 				drawn = true;
 			}
 		}
+	}
+	if (drawn) {
+		DrawLine(static_cast<unsigned short>(triangle[0].x),
+			static_cast<unsigned short>(triangle[0].y),
+			static_cast<unsigned short>(triangle[1].x),
+			static_cast<unsigned short>(triangle[1].y),
+			c);
+
+		DrawLine(static_cast<unsigned short>(triangle[1].x),
+			static_cast<unsigned short>(triangle[1].y),
+			static_cast<unsigned short>(triangle[2].x),
+			static_cast<unsigned short>(triangle[2].y),
+			c);
+
+		DrawLine(static_cast<unsigned short>(triangle[2].x),
+			static_cast<unsigned short>(triangle[2].y),
+			static_cast<unsigned short>(triangle[0].x),
+			static_cast<unsigned short>(triangle[0].y),
+			c);
 	}
 }
 
