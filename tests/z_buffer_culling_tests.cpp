@@ -8,7 +8,7 @@
 
 
 TEST_CASE("Triangle rasterization test") {
-    ZCulling* image = new ZCulling(1920, 1080, "models/cube.obj");
+    ZCulling* image = new ZCulling(1920, 1080, "models/triangles.obj");
     image->Clear();
 
     BENCHMARK("Draw scene")
