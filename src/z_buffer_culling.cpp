@@ -19,6 +19,15 @@ ZCulling::~ZCulling()
 	depth_buffer.clear();
 }
 
+void ZCulling::Clear()
+{
+	frame_buffer.resize(width * height);
+	depth_buffer.resize(width * height);
+	for (int i = 0; i < width * height; i++) {
+		depth_buffer[i] = std::numeric_limits<float>::max();
+	}
+}
+
 void ZCulling::DrawScene()
 {
 	parser->Parse();
@@ -82,21 +91,16 @@ void ZCulling::DrawScene()
 		float4 translated[3];
 		for (int i = 0; i < 3; i++)
 		{
-			std::cout << face.vertexes[i] << std::endl << std::endl;
+			//std::cout << face.vertexes[i] << std::endl << std::endl;
 			translated[i] = mul(translateMatrix, face.vertexes[i]);
 			translated[i] /= translated[i].w;
 			translated[i].x = x_center + x_center * translated[i].x;
 			translated[i].y = y_center + y_center * translated[i].y;
-			std::cout << translated[i] << std::endl;
+			//std::cout << translated[i] << std::endl;
 		}
 		DrawTriangle(translated);
-		std::cout << std::endl;
+		//std::cout << std::endl;
 	}
-}
-
-void ZCulling::Clear()
-{
-
 }
 
 void ZCulling::DrawTriangle(float4 triangle[3])
